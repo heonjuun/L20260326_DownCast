@@ -2,6 +2,7 @@
 #include <conio.h>
 #include "Actor.h"
 #include "World.h"
+#include "SDL.h"
 
 UEngine* UEngine::Instance = nullptr;
 
@@ -21,6 +22,15 @@ UEngine::~UEngine()
 
 void UEngine::Init()
 {
+	SDL_Init(SDL_INIT_EVERYTHING);
+
+	// Äµ¹ö½º
+	MyWindow = SDL_CreateWindow("Hello", 300, 100, 1040, 880, SDL_WINDOW_SHOWN);
+
+
+
+	//GPU, º×
+	MyRender = SDL_CreateRenderer(MyWindow, -1, 0);
 	bIsRunning = true;
 
 	InitBuffer();
@@ -30,9 +40,19 @@ void UEngine::Init()
 
 void UEngine::Term()
 {
+	SDL_DestroyRenderer(MyRender);
+
+	SDL_DestroyWindow(MyWindow);
+
+	SDL_Quit();
 	delete World;
 	TermBuffer();
 	World = nullptr;
+}
+
+void UEngine::Stop()
+{
+	bIsRunning = false;
 }
 
 
@@ -40,6 +60,7 @@ void UEngine::Run()
 {
 	while (bIsRunning)
 	{
+		SDL_PollEvent(&MyEvent);
 		Input();
 		Tick();
 		Render();
@@ -76,6 +97,16 @@ void UEngine::Render(int InX, int InY, char InMesh)
 	WriteFile(ScreenBufferHandle[ActiveScreenBufferIndex], MeshString, 1, NULL, NULL);
 }
 
+
+void UEngine::Render(int InX, int InY, int R, int G, int B)
+{
+	int TileSize = 30;
+	SDL_SetRenderDrawColor(MyRender, R,  G, B,255);
+	SDL_Rect MyRect = { InX * TileSize, InY * TileSize,TileSize,TileSize };
+	SDL_RenderFillRect(MyRender,&MyRect);
+	//SDL_RenderDrawPoint(MyRender, InX, InY);
+}
+
 void UEngine::Flip()
 {
 	SetConsoleActiveScreenBuffer(ScreenBufferHandle[ActiveScreenBufferIndex]);
@@ -98,10 +129,19 @@ void UEngine::Input()
 
 void UEngine::Tick()
 {
+	if (MyEvent.type == SDL_QUIT)
+	{
+	}
 	World->Tick();
 }
 
 void UEngine::Render()
 {
+	SDL_SetRenderDrawColor(MyRender, 255, 255, 255, 255);
+	
+	SDL_RenderClear(MyRender);
 	World->Render();
+
+	//±×·ÁCPU -> GPU
+	SDL_RenderPresent(MyRender);
 }
