@@ -21,17 +21,17 @@ int SDL_main(int argc, char* argv[])
 	while (true)
 	{
 
-
 		SDL_Event MyEvent;
 		SDL_PollEvent(&MyEvent);
 
-		SDL_SetRenderDrawColor(MyRender, 255, 255, 255, 255);
-		SDL_RenderClear(MyRender);
+		//SDL_SetRenderDrawColor(MyRender, 0, 0, 0, 0);
+		/*SDL_RenderClear(MyRender);*/
 
 		SDL_SetRenderDrawColor(MyRender, 155, 255, 0, 0);
 		SDL_Rect MyRect = { X,Y,50,50 };
-		SDL_RenderDrawRect(MyRender, &MyRect);
-
+		SDL_RenderFillRect(MyRender, &MyRect);
+		
+		
 		if (MyEvent.type==SDL_KEYDOWN)
 		{
 			if (MyEvent.key.keysym.sym==SDLK_w)
@@ -52,7 +52,6 @@ int SDL_main(int argc, char* argv[])
 			}
 		}
 		SDL_RenderPresent(MyRender);
-
 	}
 
 	
