@@ -12,5 +12,14 @@ public:
 	virtual void Tick() override;
 
 	virtual void Render() override;
+
+	//virtual void Load(std::string Filename) override;
+
+protected:
+	int SpriteIndexX=0;
+	int SpriteIndexY=0;
+
+	float ElapsedTime = 0;
+	float ExecutionTime= 0.1f;
 };
 

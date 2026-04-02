@@ -1,25 +1,54 @@
 #include <iostream>
-#include "Engine.h"
-#include "World.h"
+#include"Engine.h"
+#include"World.h"
 
-//#include"SDL.h"
-//사용할 라이브러리 복사
-// include경로 추가
-// lib 경로 추가
-// library 파일 등록
-//#include"SDL_main.h"
-
-//삼각함수를 그리기 위한 매스라이브러리
-//#include"math.h"
-//#define _USE_MATH_DEFINES
-//
-//#include<random>
-//
-////사용할 라이브러리 파일 추가
-//#pragma comment(lib,"SDL2")
-//#pragma comment(lib,"SDL2main")
+#include<map>
 
 using namespace std;
+
+int SDL_main(int argc, char* argv[])
+{
+	//딕셔너리 함수
+	//키랑 밸류값을 쌍으로 묵는다.이 자료는 키를 정하고 가기때문에 인덱스를 매기지 않는다.
+	//std::map<std::string, std::string> Dictionary;
+	//Dictionary["Hello"] = "안녕";
+	//Dictionary["word"] = "단어";
+	//Dictionary["A"] = "에이";
+	//for (std::map<std::string, std::string>::iterator i = Dictionary.begin(); i != Dictionary.end(); i++)
+	//{
+	//	cout << (i->first) << "," << (i->second) << endl; //first는 키 second는 밸류
+	//}
+	//for (auto i : Dictionary)
+	//{
+	//	cout << i.first << i.second << endl;
+	//}
+
+	GEngine->GetWorld()->Load("level01.umap");
+
+	GEngine->Run();
+
+	delete GEngine;
+	
+
+
+
+
+
+	return 0;
+}
+
+
+
+//비트 마스킹
+//Uint32 Number1 = SDL_RENDERER_SOFTWARE | SDL_RENDERER_ACCELERATED;
+////byte Number2 = SDL_RENDERER_ACCELERATED;
+//if (Number1 & SDL_RENDERER_SOFTWARE)
+//{
+
+//}
+//스탠실 기법 0과 1 걸러내기
+
+
 
 //int SDL_main(int argc, char* argv[])
 //{
@@ -126,16 +155,117 @@ using namespace std;
 //	return 0;
 //}
 
-//int SDL_main(int argc, char* argv[])
+
+//#include"SDL.h"
+//사용할 라이브러리 복사
+// include경로 추가
+// lib 경로 추가
+// library 파일 등록
+//#include"SDL_main.h"
+
+//삼각함수를 그리기 위한 매스라이브러리
+//#include"math.h"
+//#define _USE_MATH_DEFINES
+//
+//#include<random>
+//
+////사용할 라이브러리 파일 추가
+//#pragma comment(lib,"SDL2")
+//#pragma comment(lib,"SDL2main")
+
+	//시계 만들기 ->비트 연산
+	//0 1 단위 이진수
+	//byte Number1 = 0b00000001;//0000 001
+	//byte Number2 = 0b00000010;//0000 001
+
+	//byte Number3 = Number1 | Number2;
+	//SDL_Log("%d", Number3);
+
+	//Number3 = Number1 & Number2;
+	//SDL_Log("%d", Number3);
+
+	//Number3 = !Number1; //!<- true false만 계산함(0 1) 비트 다뒤집지 않음 숫자보고 싶으면 ~ 써야함
+
+	//Number3 = ~Number1;
+	//SDL_Log("%d", Number3);
+
+	//Number3 = Number1 ^ Number2;
+	//SDL_Log("%d", Number3);
+
+
+
+	//SDL_Log("%d",Number1);
+
+	//Number1=Number1 << 1;//shift 연산
+	//SDL_Log("%d", Number1);
+
+	//Number1 = Number1 << 1;//shift 연산
+	//SDL_Log("%d", Number1);
+
+	//Number1 = Number1 << 1;//shift 연산
+	//SDL_Log("%d", Number1);
+
+//#include<bitset>
+//typedef unsigned char byte;
+//using byte = unsigned char;
+//using Uint64 = unsigned long long;
+
+//int main()
 //{
-//	GEngine->GetWorld()->Load("level01.umap");
+//	bitset<5>bit("01001");
+//	int N;
+//	cin >> N;
+//	int* arr1 = new int[N];
+//	int* arr2 = new int[N];
 //
-//	GEngine->Run();
+//	for (int i = 0; i < N; i++)
+//	{
 //
-//	delete GEngine;
+//	}
+//
+//	//int arr1[5] = {9,20,28,18,11};
+//	//int arr2[5] = { 9,20,28,18,11 };
 //
 //	return 0;
 //}
-
-
-
+// 
+// 
+//int main()
+//{
+//	//받을 숫자의 갯수
+//	int InputNumber=0;
+//
+//	cin >> InputNumber;
+//
+//	//입력할 숫자
+//	Uint64 Number=0;
+//
+//	int XorSum=0;
+//	// 0011 0101 0111
+//
+//				//if (Number < pow(2, j)) //pow 제곱 하는 함수
+//			//{
+//			//	break;				
+//			//}
+//	for (int i = 0; i < InputNumber; i++)
+//	{
+//		cin >> Number;	
+//		for (int j = 0; j < 63; j++)
+//		{
+//			Uint64 NPOT=(1 << j);
+//			if (Number < NPOT)
+//			{
+//				XorSum = XorSum^ NPOT;
+//				break;
+//			}
+//			
+//		}
+//		//Number = 2 ^ Number; 
+//		//XorSum^= Number;
+//	}
+//	cout << XorSum;
+//	
+//	
+//	
+//	return 0;
+//}

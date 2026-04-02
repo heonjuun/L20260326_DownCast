@@ -1,13 +1,8 @@
 #pragma once
-
 #include <vector>
 #include <Windows.h>
 #include"SDL.h"
-//삼각함수를 그리기 위한 매스라이브러리
-#include"math.h"
-#define _USE_MATH_DEFINES
 
-#include<random>
 
 //사용할 라이브러리 파일 추가
 #pragma comment(lib,"SDL2")
@@ -15,9 +10,7 @@
 
 class AActor;
 class UWorld;
-
-struct SDL_Window;
-struct SDL_Renderer;
+class UResourceManager;
 
 class UEngine
 {
@@ -41,16 +34,18 @@ public:
 
 	void Init();
 	void Term();
+	void Run();
+
 	void Stop();
 
-	void Run();
+	
 
 	inline UWorld* GetWorld()
 	{
 		return World;
 	}
 
-	static int KeyCode;
+	//static int KeyCode;
 	
 	//Renderer
 	HANDLE ScreenBufferHandle[2];
@@ -60,6 +55,8 @@ public:
 	void Clear();
 	void Render(int InX, int InY, char InMesh);
 	void Render(int InX, int InY, int R, int G, int B);
+	void Render(int InX, int InY, SDL_Texture* InTexture);
+
 	void Flip();
 	void TermBuffer();
 
@@ -68,6 +65,24 @@ public:
 		return MyEvent;
 	}
 
+	inline float GetDeltaSeconds() const
+	{
+		return DeltaSeconds;
+	}
+
+	inline SDL_Renderer* GetRenderer() const
+	{
+		return MyRenderer;
+	}
+
+	inline SDL_Window* GetWindow() const
+	{
+		return MyWindow;
+	}
+	inline UResourceManager* GetResourceManager() const
+	{
+		return ResourceManager;
+	}
 protected:
 	void Input();
 	void Tick();
@@ -76,11 +91,19 @@ protected:
 
 	class UWorld* World;
 
-	int bIsRunning : 1;
-	SDL_Window* MyWindow;
-	SDL_Renderer* MyRender;
-	SDL_Event MyEvent;
-};
+	
 
+	int bIsRunning : 1;
+
+	SDL_Window* MyWindow;
+
+	SDL_Renderer* MyRenderer;
+
+	SDL_Event MyEvent;
+	
+	float DeltaSeconds;
+	
+	UResourceManager* ResourceManager;
+};
 
 #define GEngine			UEngine::GetInstance()
